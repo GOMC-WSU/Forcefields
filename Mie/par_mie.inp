@@ -1,5 +1,5 @@
 *
-* Topology File for Mie General model (Mick, Soroush Barhaghi, and Potoff) United Atom Force Field
+* Parameters for the MiPPE potential (Potoff et al.)
 *
 * Parameters From:
 *
@@ -7,10 +7,11 @@
 * Potoff, Jeffrey J., and Damien A. Bernard-Brunel. 
 * The Journal of Physical Chemistry B 113.44 (2009): 14725-14731.
 *
+* "Optimized Mie potentials for phase equilibria: Application to noble gases and their mixtures with n-alkanes," 
+* Mick, Soroush Barhaghi, Jackman, Rushaidat, Schwiebert, and Potoff, J. Chem. Phys. 2015, 143, 114504
 *
-* "Optimized Mie Potentials for Phase Equilibria: Understanding the limits of transferability in branched alkanes" 
-* Jason R. Mick, Mohammad Soroush Barhaghi, Jeffrey J. Potoff.
-*
+* "Histogram-free reweighting with grand canonical Monte Carlo: Post-simulation optimization of non-bonded potentials for 
+*  phase equilibria," Messerly, Soroush Barhaghi, Potoff and Shirts, J. Chem. Eng. Data, 2019, 64, 3701
 *
 
 
@@ -43,6 +44,7 @@ CTT CTT        9999999999      1.580   ! (2,2,3,3-tetramethylbutane)
 CF3 CF3	       9999999999      1.540   ! 
 CF3 CF2        9999999999      1.540   !
 CF2 CF2        9999999999      1.540   !
+CR2 CR2        9999999999      1.540   ! Cyclohexane
 
 
 
@@ -91,6 +93,7 @@ CH3 CTT CH3         31250        107.00 ! (2,2,3,3-tetramethylbutane)
 CF3 CF2 CF3	    31250	 114.00	! perfluorocarbons
 CF2 CF2 CF3	    31250	 114.00	! 
 CF2 CF2 CF2	    31250	 114.00	! 
+CR2 CR2 CR2         31250        114.00 ! Cyclohexane
 
 
 DIHEDRALS
@@ -137,8 +140,8 @@ X   CTS CTS X     -2047.060000  3      0.0   ! (ex. 2,2,3,3-tetramethylbutane)
 X   CTS CTS X       529.250000  6    180.0   ! ""
 X   CTS CTS X       150.160000 12      0.0   ! ""
 ! perfluorocarbons: use wacky seven term torsion
-!X   CF2 CF2 X	   -1577.68	0      0.0  !	Fit to MP2/6-31+g(d,p) data for perfluorobutane
-X   CF2 CF2 X	    -788.84	0      0.0  !	must divide c0 terms by 2 in GOMC.  Do not use in NAMD
+X   CF2 CF2 X	   -1577.68	0      0.0  !	Fit to MP2/6-31+g(d,p) data for perfluorobutane
+!X   CF2 CF2 X	    -788.84	0      0.0  !	must divide c0 terms by 2 in GOMC=fixed in GOMC after v2.40; Do not use in NAMD
 X   CF2 CF2 X	     791.61	1      0.0  !	
 X   CF2 CF2 X	     333.65	2      0.0  !	
 X   CF2 CF2 X	     854.01	3      0.0  !	
@@ -146,6 +149,10 @@ X   CF2 CF2 X	     349.25	4      0.0  !
 X   CF2 CF2 X	     211.51	5      0.0  !	
 X   CF2 CF2 X	     117.66	6      0.0  !	
 X   CF2 CF2 X	     -83.44	7      0.0  !	
+! cyclohexane
+X   CR2 CR2 X       355.030000    1      0.0              ! ""
+X   CR2 CR2 X       -68.190000    2    180.0              ! ""
+X   CR2 CR2 X       791.320000    3      0.0              ! ""
 
 
 NONBONDED_MIE
@@ -161,7 +168,12 @@ CHL      14.00       4.700      16   ! alkanes w/ 5 or more carbons in backbone
 CTS       1.45       6.100      16   ! alkanes w/ 4 or less carbons in backbone
 CTL       1.20       6.200      16   ! alkanes w/ 5 or more carbons in backbone
 CTT       1.45       6.100      16   ! 2,2,3,3-tetramethylbutane (same as CTS)
+CR2     69.700       3.9020     16   ! CH2 in Cyclohexane; Messerly, JCED 2019, 64, 3701
 CF4     269.00       4.355      36   ! Potoff, 2009
 CF3     155.75       4.475      36   ! Potoff, 2009
 CF2      72.20       4.75       44   ! Potoff, 2009 
-
+NE	 32.30	     2.794	11   ! Mick, JCP 2015, 143, 114504
+AR	122.10       3.405	13   ! Mick, JCP 2015, 143, 114504
+KR	176.10	     3.645	14   ! Mick, JCP 2015, 143, 114504
+XE	243.80	     3.964	14   ! Mick, JCP 2015, 143, 114504
+RN	292.0	     4.145	12   ! Mick, JCED 2016, 61, 1625
