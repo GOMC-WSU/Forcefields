@@ -19,8 +19,9 @@
 * H Berendsen, J. Grigera, T Straatsma
 * J. Phys. Chem. (1987), 91, 6269-6271
 *
-* "Pressure Dependence of the Vapor-Liquid-Liquid Phase Behavior in Ternary Mixtures
-*  Consisting of n-Alkanes,n-Perfluoroalkanes, and Carbon Dioxide"
+* "Pressure Dependence of the Vapor-Liquid-Liquid Phase Behavior 
+* in Ternary Mixtures Consisting of n-Alkanes,n-Perfluoroalkanes, 
+* and Carbon Dioxide"
 * Ling Zhang and J. Ilja Siepmann
 * J. Phys. Chem. B (2005), 109, 2911
 
@@ -48,7 +49,7 @@ OH1  CH3       9999999999      1.430   ! Alcohol
 OH1  CH2       9999999999      1.430   ! Alcohol
 OH1  H         9999999999      0.945   ! Alcohol
 OT   HT        9999999999      1.000   ! SPC bond length 
-
+CT3  OE	       9999999999      1.410   ! CH3-OE bond in DME
 ANGLES
 !
 !V(angle) = Ktheta(Theta - Theta0)**2
@@ -97,6 +98,7 @@ CH2  CF2  CF3   31250	 114.0   0.0	  0.0
 CF2  CF2  CF3   31250	 114.0   0.0	  0.0
 CF2  CF2  CF2   31250    114.0   0.0      0.0
 CH2  CF2  CF2   31250    114.0   0.0      0.0 !from CF2 CF2 CF2
+CT3  OE   CT3   30200    112.0   0.0      0.0 !DME
 
 DIHEDRALS
 !
@@ -220,6 +222,7 @@ OH1	 93.0        3.02	12   ! TraPPE V
 H	  0.0 	     0.0        12   ! TraPPE V	
 CF3	 87.0	     4.36	12   ! JPCB 109,2911 (2005)
 CF2	 27.5	     27.5       12
+OE	 55.0	     2.80	12   ! TraPPE VI (DME)
 !SPC/E Water
 HT	  0.0        0.0        12   ! SPC/E
 OT	 78.21       3.167      12   ! SPC/E

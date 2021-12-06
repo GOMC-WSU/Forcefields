@@ -21,6 +21,11 @@
 * Bin Chen, Jeffrey Potoff and Ilja Siepmann
 * The Journal of Physical Chemistry B 105.15 (2001): 3093-3104
 *
+* Transferable Potentials for Phase Equilibria. 6. United-Atom Description 
+* for Ethers, Glycols, Ketones, and Aldehydes
+* John M. Stubbs, Jeffrey J. Potoff, and J. Ilja Siepmann
+* J. Phys. Chem. B 2004, 108, 45, 17596–17605
+*
 * Isomer Naming:
 * C4A : n-butane
 * C4B : 2-methylpropane (1)
@@ -67,6 +72,7 @@
 * C6OH : hexanol
 * C7OH : heptanol
 * C8OH : octanol
+* DME  : dimethylether
 !
 !
 !
@@ -79,6 +85,8 @@ MASS   6  OH1	 15.9994 O ! O in alcohol
 MASS   7  H      1.00800 H ! H in alcohol
 MASS   8  OT     15.9994 O ! Oxygen in water
 MASS   9  HT     1.00800 H ! H in water
+MASS  10  OE	 15.9994 O ! O in ether
+
 DEFA FIRS none LAST none
 AUTOGENERATE ANGLES DIHEDRALS
 
@@ -737,6 +745,16 @@ BOND H1 O1  O1 C1  C1 C2  C2 C3  C3 C4  C4 C5  C5 C6  C6 C7 C7 C8
 
 AUTOGENERATE ANGLES DIHEDRALS
 PATCHING FIRS NONE LAST NONE
+
+RESI  DME       0.0    ! Dimethyl ether
+GROUP
+ATOM C1  CT3    0.25   ! C1-O1-C2
+ATOM O1  OE    -0.50
+ATOM C2  CT3    0.25
+BOND C1 O1  O1 C2
+ANGLE C1 O1 C2
+PATCHING FIRS NONE LAST NONE
+
 
 !SPC/E Water
 RESI SPCE	0.00
