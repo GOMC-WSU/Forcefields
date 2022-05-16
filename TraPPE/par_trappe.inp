@@ -15,15 +15,7 @@
 * The Journal of Physical Chemistry B 103.21 (1999): 4508-4517.
 * DOI: 10.1021/jp984742e
 *
-* "The missing term in effective pair potentials"
-* H Berendsen, J. Grigera, T Straatsma
-* J. Phys. Chem. (1987), 91, 6269-6271
 *
-* "Pressure Dependence of the Vapor-Liquid-Liquid Phase Behavior 
-* in Ternary Mixtures Consisting of n-Alkanes,n-Perfluoroalkanes, 
-* and Carbon Dioxide"
-* Ling Zhang and J. Ilja Siepmann
-* J. Phys. Chem. B (2005), 109, 2911
 
 
 BONDS
@@ -49,7 +41,27 @@ OH1  CH3       9999999999      1.430   ! Alcohol
 OH1  CH2       9999999999      1.430   ! Alcohol
 OH1  H         9999999999      0.945   ! Alcohol
 OT   HT        9999999999      1.000   ! SPC bond length 
-CH3  OE	       9999999999      1.410   ! CH3-OE bond in DME
+! fluorcarbons
+OH1  CF2  	9999999999	  1.4300 ! Alcohol
+OH1  CF3   	9999999999	  1.4300 ! Alcohol
+CH2  CF2   	9999999999	  1.5400
+CH2  CF3   	9999999999	  1.5400
+CF2  CF2   	9999999999	  1.5400
+CF2  CF3   	9999999999	  1.5400
+! CO2
+CO   OC		9999999999	  1.16 ! in CO2
+! N2
+N    COM	9999999999	  0.55 ! N2
+! testing CO models
+CM   OM		9999999999	  1.1282 ! in CO	
+CM   COM	9999999999	  0.5641 ! in CO Straub
+COM  OM		9999999999	  0.5641 ! in CO Straub
+! benzene
+CHA CHA		9999999999	  1.40 ! benzene
+! TIP4P/2005
+OH   HO    99999999999     0.9572 ! TIP4P/2005 O-H bond length  
+OH   MO    99999999999     0.1546 ! TIP4P/2005 M-O bond length
+
 ANGLES
 !
 !V(angle) = Ktheta(Theta - Theta0)**2
@@ -98,7 +110,17 @@ CH2  CF2  CF3   31250	 114.0   0.0	  0.0
 CF2  CF2  CF3   31250	 114.0   0.0	  0.0
 CF2  CF2  CF2   31250    114.0   0.0      0.0
 CH2  CF2  CF2   31250    114.0   0.0      0.0 !from CF2 CF2 CF2
-CH3  OE   CH3   30200    112.0   0.0      0.0 !DME
+! CO2
+OC   CO   OC    999999999    180.0   0.0      0.0 ! CO2
+! N2
+N   COM   N     999999999    180.0   0.0      0.0 ! N2
+! CO
+CM   COM  OM	999999999    180.0   0.0      0.0 ! CO
+! benzene
+CHA CHA CHA     999999999    120.0   0.0      0.0  ! benzene
+! TIP4P/2005
+HO   OH   HO    9999999999999    104.52  ! Fix Angle
+HO   OH   MO    9999999999999     52.26  ! Fix Angle
 
 DIHEDRALS
 !
@@ -133,16 +155,17 @@ X   CT  CT  X      2950.91    0      0.0  ! this work
 X   CT  CT  X     -2047.06    3      0.0  ! (2,2,3,3-tetramethylbutane)
 X   CT  CT  X       529.25    6    180.0  ! ""
 X   CT  CT  X       150.16   12      0.0  ! ""
+OH1  CH2  CH2  CH2    0.0     0     0.00 ! octanol
 OH1  CH2  CH2  CH2  176.62    1     0.00 ! octanol
 OH1  CH2  CH2  CH2  -53.34    2   180.00 ! octanol
 OH1  CH2  CH2  CH2  769.93    3     0.00 ! octanol
 H    OH1  CH2  CH3  209.82    1     0.00 ! ethanol
 H    OH1  CH2  CH3  -29.17    2   180.00 ! ethanol
 H    OH1  CH2  CH3  187.93    3     0.00 ! ethanol
+H    OH1  CH2  CH2    0.0     0     0.00 ! octanol
 H    OH1  CH2  CH2  209.82    1     0.00 ! octanol
 H    OH1  CH2  CH2  -29.17    2   180.00 ! octanol
 H    OH1  CH2  CH2  187.93    3     0.00 ! octanol
-
 !fluorocarbons
 H	OH1	CF2	CF2	422.33	1	0
 H	OH1	CF2	CF2	-55.16	2	180
@@ -207,7 +230,8 @@ CH2	CH2	CF2	CF3	450.15	1	0
 CH2	CH2	CF2	CF3    -291.33	2	180
 CH2	CH2	CF2	CF3	936.29	3	0
 CH2	CH2	CF2	CF3	-82.23	4	180
-
+!benzene
+CHA 	CHA	CHA	CHA	999999  0    	0.0 ! benzene
 NONBONDED_MIE
 !
 !V(mie) = 4*eps*((sig_ij/r_ij)^n-(sig_ij/r_ij)^6)
@@ -220,10 +244,29 @@ CH1      10.00       4.680      12   ! TraPPE II
 CT        0.50       6.400      12   ! TraPPE II
 OH1	 93.0        3.02	12   ! TraPPE V
 H	  0.0 	     0.0        12   ! TraPPE V	
-CF3	 87.0	     4.36	12   ! JPCB 109,2911 (2005)
-CF2	 27.5	     27.5       12
-OE	 55.0	     2.80	12   ! TraPPE VI (DME)
+OE	55.0	     2.80	12   ! TraPPE VI	
+CF2	 27.5	     4.73	12   ! Zhang and Siepmann JPCB 2005
+CF3	 87.0	     4.36	12
+CHA	 50.5        3.695	12   ! benzene
 !SPC/E Water
 HT	  0.0        0.0        12   ! SPC/E
-OT	 78.21       3.167      12   ! SPC/E
-	
+OT	 78.2        3.167      12   ! CHECK PARAMETERS!
+!TIP4P/2005
+OH	 93.2	     3.1589	12   ! TIP4P/2005	
+HO	  0.0	     0.0	12
+MO	  0.0	     0.0	12 
+!  CO2
+CO	 27.0	     2.80	12   ! TraPPE CO2
+OC	 79.0	     3.05	12   ! TraPPE CO2
+! N2
+N	 36.0	     3.31	12   ! TraPPE N2
+! CO
+CM	13.1104	     3.83	12   ! Straub CO
+OM	80.1058	     3.12	12   ! Straub CO
+COM	0.0	     0.0	12   ! generic COM site		
+! noble gas parameters from Vrabec
+NE	23.876	     3.048	12   ! Neon form Linnemann et al JCED 2020
+AR	116.79	     3.3952	12   ! Argon
+KR	162.58	     3.6274	12   ! Krypton
+XE	227.55	     3.9011	12   ! Xeon
+RN	292.0	     4.145	12   ! RN from Mick et al.

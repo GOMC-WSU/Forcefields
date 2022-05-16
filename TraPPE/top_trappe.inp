@@ -21,11 +21,6 @@
 * Bin Chen, Jeffrey Potoff and Ilja Siepmann
 * The Journal of Physical Chemistry B 105.15 (2001): 3093-3104
 *
-* Transferable Potentials for Phase Equilibria. 6. United-Atom Description 
-* for Ethers, Glycols, Ketones, and Aldehydes
-* John M. Stubbs, Jeffrey J. Potoff, and J. Ilja Siepmann
-* J. Phys. Chem. B 2004, 108, 45, 17596–17605
-*
 * Isomer Naming:
 * C4A : n-butane
 * C4B : 2-methylpropane (1)
@@ -37,6 +32,7 @@
 * C6C : 3-methylpentane (2)
 * C6D : 2,2-dimethylbutane (3)
 * C6E : 2,3-dimethylbutane (4)
+* C6F : benzene
 * C7A : n-heptane
 * C7B : 2-methylhexane (1)
 * C7C : 3-methylhexane (2)
@@ -72,7 +68,7 @@
 * C6OH : hexanol
 * C7OH : heptanol
 * C8OH : octanol
-* DME  : dimethylether
+* DME  ! dimethyl ether
 !
 !
 !
@@ -85,7 +81,23 @@ MASS   6  OH1	 15.9994 O ! O in alcohol
 MASS   7  H      1.00800 H ! H in alcohol
 MASS   8  OT     15.9994 O ! Oxygen in water
 MASS   9  HT     1.00800 H ! H in water
-MASS  10  OE	 15.9994 O ! O in ether
+MASS  10  CF2	 50.0000 C ! CF2 
+MASS  11  CF3	 69.0000 C ! CF3
+MASS  12  CO	 12.0011 C ! in CO2
+MASS  13  OC     15.9994 O ! O in CO2
+MASS  14  N	 14.0067 N ! N in N2
+MASS  15  COM     0.0000 Q ! dummy center of mass site for linear molecules
+MASS  16  CM     12.0011 C ! C in CO
+MASS  17  OM     15.9994 O ! O in CO
+MASS  18  CHA	 13.019  C ! CH in Benzene
+MASS  19  OH     15.9994 O ! O in TIP4P/2005
+MASS  20  HO      1.0000 H ! H in TIP4P/2005
+MASS  21  MO	  0.0000 M ! Charge site in TIP4P/2005	
+MASS  22  NE     20.1797 NE ! Neon
+MASS  23  AR     39.948 AR  ! Argon
+MASS  24  KR     83.798 KR  ! krypton
+MASS  25  XE    131.293 XE  ! xenon
+MASS  26  OE     15.999  O  ! O in ethers
 
 DEFA FIRS none LAST none
 AUTOGENERATE ANGLES DIHEDRALS
@@ -115,7 +127,7 @@ GROUP
 ATOM C1 CH3     0.00 ! C1    C3
 ATOM C2 CH2     0.00 !   \  /  \
 ATOM C3 CH2     0.00 !    C2    C4
-ATOM C4 CH3     0.00 !
+ATOM C3 CH3     0.00 !
 BOND C1 C2 C2 C3 C3 C4
 PATCHING FIRS NONE LAST NONE
 
@@ -220,6 +232,17 @@ ATOM C6 CH3     0.00 !
 BOND C1 C2 C2 C3 C3 C4
 BOND C3 C5 C3 C6
 PATCHING FIRS NONE LAST NONE
+
+RESI C6F	0.0  	! benzene
+ATOM C1	CHA	0.0	!
+ATOM C2	CHA	0.0	!
+ATOM C3	CHA	0.0	!
+ATOM C4 CHA	0.0	!
+ATOM C5 CHA	0.0	!
+ATOM C6 CHA	0.0	!
+BOND C1 C2  C2 C3  C3 C4
+BOND C4 C5  C5 C6  C6 C1
+PATCHING FIRST NONE LAST NONE	
 
 !RESI C7A        0.00 ! n-heptane
 !GROUP
@@ -746,14 +769,472 @@ BOND H1 O1  O1 C1  C1 C2  C2 C3  C3 C4  C4 C5  C5 C6  C6 C7 C7 C8
 AUTOGENERATE ANGLES DIHEDRALS
 PATCHING FIRS NONE LAST NONE
 
-RESI  DME       0.0    ! Dimethyl ether
+!Perfluoroalcohols
+
+!perfluoromethanol
+RESI F3O           0.00  ! CF3-OH
 GROUP
-ATOM C1  CH3    0.25   ! C1-O1-C2
-ATOM O1  OE    -0.50
-ATOM C2  CH3    0.25
-BOND C1 O1  O1 C2
-ANGLE C1 O1 C2
+ATOM  H1   H      0.435 ! ok
+ATOM  O1   OH1    -0.70 ! 
+ATOM  C1   CF3     0.265
+
+BOND H1 O1  O1 C1 
+AUTOGENERATE ANGLES DIHEDRALS
+
+!perfluoroethanol
+RESI F5O           0.00  ! CF3-CF2-OH
+GROUP
+ATOM  H1   H      0.435 ! ok
+ATOM  O1   OH1    -0.700 ! 
+ATOM  C1   CF2     0.265
+ATOM  C2   CF3     0.00
+
+BOND H1 O1   O1 C1   C1 C2
+AUTOGENERATE ANGLES DIHEDRALS
+
+!perfluoropropanol
+RESI F7O          0.00  ! CF3-CF2-CF2-OH
+GROUP
+ATOM  H1   H     0.435 ! ok
+ATOM  O1   OH1   -0.700 ! 
+ATOM  C1   CF2     0.265 
+ATOM  C2   CF2     0.0
+ATOM  C3   CF3     0.0
+BOND H1 O1   O1 C1   C1 C2 C2 C3
+AUTOGENERATE ANGLES DIHEDRALS
+
+!perfluorobutanol
+RESI  F9O          0.00  ! CF3-CF2-CF2-CF2-OH
+GROUP
+ATOM  H1   H      0.435 ! ok
+ATOM  O1   OH1    -0.700 ! 
+ATOM  C1   CF2     0.265
+ATOM  C2   CF2     0.0
+ATOM  C3   CF2     0.0
+ATOM  C4   CF3     0.0
+BOND H1 O1   O1 C1 C1 C2
+BOND C2 C3 C3 C4
+AUTOGENERATE ANGLES DIHEDRALS
+
+!perfluoropentanol
+RESI  F11O         0.00  ! CF3-CF2-CF2-CF2-CF2-OH
+GROUP
+ATOM  H1   H      0.435 ! ok
+ATOM  O1   OH1    -0.70 ! 
+ATOM  C1   CF2      0.265
+ATOM  C2   CF2      0.0
+ATOM  C3   CF2      0.0
+ATOM  C4   CF2      0.0
+ATOM  C5   CF3      0.0
+
+BOND H1 O1   O1 C1 C1 C2
+BOND C2 C3 C3 C4 C4 C5
+AUTOGENERATE ANGLES DIHEDRALS
+
+!perfluorohexanol
+RESI  F13O         0.00  ! CF3-CF2-CF2-CF2-CF2-CF2-OH
+GROUP
+ATOM  H1   H      0.435 ! ok
+ATOM  O1   OH1    -0.70 ! fixed per 1996 OPLS-AA paper
+ATOM  C1   CF2      0.265
+ATOM  C2   CF2      0.0
+ATOM  C3   CF2      0.0
+ATOM  C4   CF2      0.0
+ATOM  C5   CF2      0.0
+ATOM  C6   CF3      0.0
+BOND H1 O1   O1 C1 C1 C2
+BOND C2 C3 C3 C4 C4 C5 C5 C6
+AUTOGENERATE ANGLES DIHEDRALS
+
+!perfluoroheptanol
+RESI  F15O         0.00  ! CF3-CF2-CF2-CF2-CF2-CF2-CF2-OH
+GROUP
+ATOM  H1   H      0.435 ! ok
+ATOM  O1   OH1    -0.70 !
+ATOM  C1   CF2      0.265
+ATOM  C2   CF2      0.0
+ATOM  C3   CF2      0.0
+ATOM  C4   CF2      0.0
+ATOM  C5   CF2      0.0
+ATOM  C6   CF2      0.0
+ATOM  C7   CF3      0.0
+
+BOND H1 O1   O1 C1 C1 C2
+BOND C2 C3 C3 C4 C4 C5 C5 C6 C6 C7
+AUTOGENERATE ANGLES DIHEDRALS
+
+!perfluorooctanol
+RESI F17O          0.00  ! CF3-CF2-CF2-CF2-CF2-CF2-CF2-CF2-OH
+GROUP
+ATOM  H1   H      0.435 ! ok
+ATOM  O1   OH1     -0.70 !
+ATOM  C1   CF2      0.265
+ATOM  C2   CF2      0.0
+ATOM  C3   CF2      0.0
+ATOM  C4   CF2      0.0
+ATOM  C5   CF2      0.0
+ATOM  C6   CF2      0.0
+ATOM  C7   CF2      0.0
+ATOM  C8   CF3      0.0
+
+BOND H1 O1   O1 C1   C1 C2 C2 C3
+BOND C3 C4   C4 C5   C5 C6 C6 C7
+BOND C7 C8
+AUTOGENERATE ANGLES DIHEDRALS
+
+AUTOGENERATE ANGLES DIHEDRALS
 PATCHING FIRS NONE LAST NONE
+
+! 1-Fluorotelomer Alcohols
+
+!1:1 FTOH
+RESI H1F1          0.00  ! CF3-CH2-OH
+GROUP
+ATOM  H1   H      0.435 ! ok
+ATOM  O1   OH1     -0.70 !
+ATOM  C1   CH2      0.265
+ATOM  C2   CF3      0.0
+
+BOND H1 O1   O1 C1   C1 C2
+AUTOGENERATE ANGLES DIHEDRALS
+
+!2:1 FTOH
+RESI H1F2          0.00  ! CF3-CF2-CH2-OH
+GROUP
+ATOM  H1   H      0.435 ! ok
+ATOM  O1   OH1     -0.70 !
+ATOM  C1   CH2      0.265
+ATOM  C2   CF2      0.0
+ATOM  C3   CF3      0.0
+
+BOND H1 O1   O1 C1   C1 C2   C2 C3
+AUTOGENERATE ANGLES DIHEDRALS
+
+!3:1 FTOH
+RESI H1F3          0.00  ! CF3-CF2-CF2-CH2-OH
+GROUP
+ATOM  H1   H      0.435 ! ok
+ATOM  O1   OH1     -0.70 !
+ATOM  C1   CH2      0.265
+ATOM  C2   CF2      0.0
+ATOM  C3   CF2      0.0
+ATOM  C4   CF3      0.0
+
+BOND H1 O1   O1 C1   C1 C2   C2 C3
+BOND C3 C4
+AUTOGENERATE ANGLES DIHEDRALS
+
+!4:1 FTOH
+RESI H1F4          0.00  ! CF3-CF2-CF2-CF2-CH2-OH
+GROUP
+ATOM  H1   H      0.435 ! ok
+ATOM  O1   OH1     -0.70 !
+ATOM  C1   CH2      0.265
+ATOM  C2   CF2      0.0
+ATOM  C3   CF2      0.0
+ATOM  C4   CF2      0.0
+ATOM  C5   CF3      0.0
+
+BOND H1 O1   O1 C1   C1 C2   C2 C3
+BOND C3 C4   C4 C5
+AUTOGENERATE ANGLES DIHEDRALS
+
+!5:1 FTOH
+RESI H1F5          0.00  ! CF3-CF2-CF2-CF2-CF2-CH2-OH
+GROUP
+ATOM  H1   H      0.435 ! ok
+ATOM  O1   OH1     -0.70 !
+ATOM  C1   CH2      0.265
+ATOM  C2   CF2      0.0
+ATOM  C3   CF2      0.0
+ATOM  C4   CF2      0.0
+ATOM  C5   CF2      0.0
+ATOM  C6   CF3      0.0
+
+BOND H1 O1   O1 C1   C1 C2   C2 C3
+BOND C3 C4   C4 C5   C5 C6
+AUTOGENERATE ANGLES DIHEDRALS
+
+!6:1 FTOH
+RESI H1F6          0.00  ! CF3-CF2-CF2-CF2-CF2-CF2-CH2-OH
+GROUP
+ATOM  H1   H      0.435 ! ok
+ATOM  O1   OH1     -0.70 !
+ATOM  C1   CH2      0.265
+ATOM  C2   CF2      0.0
+ATOM  C3   CF2      0.0
+ATOM  C4   CF2      0.0
+ATOM  C5   CF2      0.0
+ATOM  C6   CF2      0.0
+ATOM  C7   CF3      0.0
+
+BOND H1 O1   O1 C1   C1 C2   C2 C3
+BOND C3 C4   C4 C5   C5 C6   C6 C7
+AUTOGENERATE ANGLES DIHEDRALS
+
+!7:1 FTOH
+RESI H1F7          0.00  ! CF3-CF2-CF2-CF2-CF2-CF2-CF2-CH2-OH
+GROUP
+ATOM  H1   H      0.435 ! ok
+ATOM  O1   OH1     -0.70 !
+ATOM  C1   CH2      0.265
+ATOM  C2   CF2      0.0
+ATOM  C3   CF2      0.0
+ATOM  C4   CF2      0.0
+ATOM  C5   CF2      0.0
+ATOM  C6   CF2      0.0
+ATOM  C7   CF2      0.0
+ATOM  C8   CF3      0.0
+
+BOND H1 O1   O1 C1   C1 C2   C2 C3
+BOND C3 C4   C4 C5   C5 C6   C6 C7
+BOND C7 C8
+AUTOGENERATE ANGLES DIHEDRALS
+
+!8:1 FTOH
+RESI H1F8          0.00  ! CF3-CF2-CF2-CF2-CF2-CF2-CF2-CF2-CH2-OH
+GROUP
+ATOM  H1   H      0.435 ! ok
+ATOM  O1   OH1     -0.70 !
+ATOM  C1   CH2      0.265
+ATOM  C2   CF2      0.0
+ATOM  C3   CF2      0.0
+ATOM  C4   CF2      0.0
+ATOM  C5   CF2      0.0
+ATOM  C6   CF2      0.0
+ATOM  C7   CF2      0.0
+ATOM  C8   CF2      0.0
+ATOM  C9   CF3      0.0
+
+BOND H1 O1   O1 C1   C1 C2   C2 C3
+BOND C3 C4   C4 C5   C5 C6   C6 C7
+BOND C7 C8   C8 C9
+AUTOGENERATE ANGLES DIHEDRALS
+
+!9:1 FTOH
+RESI H1F9          0.00  ! CF3-CF2-CF2-CF2-CF2-CF2-CF2-CF2-CF2-CH2-OH
+GROUP
+ATOM  H1   H      0.435 ! ok
+ATOM  O1   OH1     -0.70 !
+ATOM  C1   CH2      0.265
+ATOM  C2   CF2      0.0
+ATOM  C3   CF2      0.0
+ATOM  C4   CF2      0.0
+ATOM  C5   CF2      0.0
+ATOM  C6   CF2      0.0
+ATOM  C7   CF2      0.0
+ATOM  C8   CF2      0.0
+ATOM  C9   CF2      0.0
+ATOM  C10  CF3      0.0
+
+BOND H1 O1   O1 C1   C1 C2   C2 C3
+BOND C3 C4   C4 C5   C5 C6   C6 C7
+BOND C7 C8   C8 C9   C9 C10
+AUTOGENERATE ANGLES DIHEDRALS
+
+!10:1 FTOH
+RESI H1F0          0.00  ! CF3-CF2-CF2-CF2-CF2-CF2-CF2-CF2-CF2-CF2-CH2-OH
+GROUP
+ATOM  H1   H      0.435 ! ok
+ATOM  O1   OH1     -0.70 !
+ATOM  C1   CH2      0.265
+ATOM  C2   CF2      0.0
+ATOM  C3   CF2      0.0
+ATOM  C4   CF2      0.0
+ATOM  C5   CF2      0.0
+ATOM  C6   CF2      0.0
+ATOM  C7   CF2      0.0
+ATOM  C8   CF2      0.0
+ATOM  C9   CF2      0.0
+ATOM  C10  CF2      0.0
+ATOM  C11  CF3      0.0
+
+BOND H1 O1   O1 C1   C1 C2   C2 C3
+BOND C3 C4   C4 C5   C5 C6   C6 C7
+BOND C7 C8   C8 C9   C9 C10  C10 C11
+AUTOGENERATE ANGLES DIHEDRALS
+
+! 2-Fluorotelomer Alcohols
+
+!1:2 FTOH
+RESI H2F1          0.00  ! CF3-CH2-CH2-OH
+GROUP
+ATOM  H1   H      0.435 ! ok
+ATOM  O1   OH1     -0.70 !
+ATOM  C1   CH2      0.265
+ATOM  C2   CH2      0.0
+ATOM  C3   CF3      0.0
+
+BOND H1 O1   O1 C1   C1 C2   C2 C3
+AUTOGENERATE ANGLES DIHEDRAL
+
+!2:2 FTOH
+RESI H2F2          0.00  ! CF3-CF2-CH2-CH2-OH
+GROUP
+ATOM  H1   H      0.435 ! ok
+ATOM  O1   OH1     -0.70 !
+ATOM  C1   CH2      0.265
+ATOM  C2   CH2      0.0
+ATOM  C3   CF2      0.0
+ATOM  C4   CF3      0.0
+
+BOND H1 O1   O1 C1   C1 C2   C2 C3
+BOND C3 C4
+AUTOGENERATE ANGLES DIHEDRAL
+
+!3:2 FTOH
+RESI H2F3          0.00  ! CF3-CF2-CF2-CH2-CH2-OH
+GROUP
+ATOM  H1   H      0.435 ! ok
+ATOM  O1   OH1     -0.70 !
+ATOM  C1   CH2      0.265
+ATOM  C2   CH2      0.0
+ATOM  C3   CF2      0.0
+ATOM  C4   CF2      0.0
+ATOM  C5   CF3      0.0
+
+BOND H1 O1   O1 C1   C1 C2   C2 C3
+BOND C3 C4   C4 C5
+AUTOGENERATE ANGLES DIHEDRAL
+
+!4:2 FTOH
+RESI H2F4          0.00  ! CF3-CF2-CF2-CF2-CH2-CH2-OH
+GROUP
+ATOM  H1   H      0.435 ! ok
+ATOM  O1   OH1     -0.70 !
+ATOM  C1   CH2      0.265
+ATOM  C2   CH2      0.0
+ATOM  C3   CF2      0.0
+ATOM  C4   CF2      0.0
+ATOM  C5   CF2      0.0
+ATOM  C6   CF3      0.0
+
+BOND H1 O1   O1 C1   C1 C2   C2 C3
+BOND C3 C4   C4 C5   C5 C6
+AUTOGENERATE ANGLES DIHEDRAL
+
+!5:2 FTOH
+RESI H2F5          0.00  ! CF3-CF2-CF2-CF2-CF2-CH2-CH2-OH
+GROUP
+ATOM  H1   H      0.435 ! ok
+ATOM  O1   OH1     -0.70 !
+ATOM  C1   CH2      0.265
+ATOM  C2   CH2      0.0
+ATOM  C3   CF2      0.0
+ATOM  C4   CF2      0.0
+ATOM  C5   CF2      0.0
+ATOM  C6   CF2      0.0
+ATOM  C7   CF3      0.0
+
+BOND H1 O1   O1 C1   C1 C2   C2 C3
+BOND C3 C4   C4 C5   C5 C6   C6 C7
+AUTOGENERATE ANGLES DIHEDRAL
+
+!6:2 FTOH
+RESI H2F6          0.00  ! CF3-CF2-CF2-CF2-CF2-CF2-CH2-CH2-OH
+GROUP
+ATOM  H1   H      0.435 ! ok
+ATOM  O1   OH1     -0.70 !
+ATOM  C1   CH2      0.265
+ATOM  C2   CH2      0.0
+ATOM  C3   CF2      0.0
+ATOM  C4   CF2      0.0
+ATOM  C5   CF2      0.0
+ATOM  C6   CF2      0.0
+ATOM  C7   CF2      0.0
+ATOM  C8   CF3      0.0
+
+BOND H1 O1   O1 C1   C1 C2   C2 C3
+BOND C3 C4   C4 C5   C5 C6   C6 C7
+BOND C7 C8
+AUTOGENERATE ANGLES DIHEDRAL
+
+!7:2 FTOH
+RESI H2F7          0.00  ! CF3-CF2-CF2-CF2-CF2-CF2-CF2-CH2-CH2-OH
+GROUP
+ATOM  H1   H      0.435 ! ok
+ATOM  O1   OH1     -0.70 !
+ATOM  C1   CH2      0.265
+ATOM  C2   CH2      0.0
+ATOM  C3   CF2      0.0
+ATOM  C4   CF2      0.0
+ATOM  C5   CF2      0.0
+ATOM  C6   CF2      0.0
+ATOM  C7   CF2      0.0
+ATOM  C8   CF2      0.0
+ATOM  C9   CF3      0.0
+
+BOND H1 O1   O1 C1   C1 C2   C2 C3
+BOND C3 C4   C4 C5   C5 C6   C6 C7
+BOND C7 C8   C8 C9
+AUTOGENERATE ANGLES DIHEDRAL
+
+!8:2 FTOH
+RESI H2F8          0.00  ! CF3-CF2-CF2-CF2-CF2-CF2-CF2-CF2-CH2-CH2-OH
+GROUP
+ATOM  H1   H      0.435 ! ok
+ATOM  O1   OH1     -0.70 !
+ATOM  C1   CH2      0.265
+ATOM  C2   CH2      0.0
+ATOM  C3   CF2      0.0
+ATOM  C4   CF2      0.0
+ATOM  C5   CF2      0.0
+ATOM  C6   CF2      0.0
+ATOM  C7   CF2      0.0
+ATOM  C8   CF2      0.0
+ATOM  C9   CF2      0.0
+ATOM  C10  CF3      0.0
+
+BOND H1 O1   O1 C1   C1 C2   C2 C3
+BOND C3 C4   C4 C5   C5 C6   C6 C7
+BOND C7 C8   C8 C9   C9 C10
+AUTOGENERATE ANGLES DIHEDRAL
+
+!9:2 FTOH
+RESI H2F9          0.00  ! CF3-CF2-CF2-CF2-CF2-CF2-CF2-CF2-CF2-CH2-CH2-OH
+GROUP
+ATOM  H1   H      0.435 ! ok
+ATOM  O1   OH1     -0.70 !
+ATOM  C1   CH2      0.265
+ATOM  C2   CH2      0.0
+ATOM  C3   CF2      0.0
+ATOM  C4   CF2      0.0
+ATOM  C5   CF2      0.0
+ATOM  C6   CF2      0.0
+ATOM  C7   CF2      0.0
+ATOM  C8   CF2      0.0
+ATOM  C9   CF2      0.0
+ATOM  C10  CF2      0.0
+ATOM  C11  CF3      0.0
+
+BOND H1 O1   O1 C1   C1 C2   C2 C3
+BOND C3 C4   C4 C5   C5 C6   C6 C7
+BOND C7 C8   C8 C9   C9 C10  C10 C11
+AUTOGENERATE ANGLES DIHEDRALS
+
+!10:2 FTOH
+RESI H2F0          0.00  ! CF3-CF2-CF2-CF2-CF2-CF2-CF2-CF2-CF2-CF2-CH2-CH2-OH
+GROUP
+ATOM  H1   H      0.435 ! ok
+ATOM  O1   OH1     -0.70 !
+ATOM  C1   CH2      0.265
+ATOM  C2   CH2      0.0
+ATOM  C3   CF2      0.0
+ATOM  C4   CF2      0.0
+ATOM  C5   CF2      0.0
+ATOM  C6   CF2      0.0
+ATOM  C7   CF2      0.0
+ATOM  C8   CF2      0.0
+ATOM  C9   CF2      0.0
+ATOM  C10  CF2      0.0
+ATOM  C11  CF2      0.0
+ATOM  C12  CF3      0.0
+
+BOND H1 O1   O1 C1   C1 C2   C2 C3
+BOND C3 C4   C4 C5   C5 C6   C6 C7
+BOND C7 C8   C8 C9   C9 C10  C10 C11
+BOND C11 C12
+AUTOGENERATE ANGLES DIHEDRALS
 
 
 !SPC/E Water
@@ -765,4 +1246,75 @@ ATOM H2    HT   0.4238
 BOND OH2 H1 OH2 H2  
 ANGLE H1 OH2 H2
 PATCHING FIRS NONE LAST NONE
+
+RESI TIP4          0.00 ! water TIP4P/2005 model
+GROUP
+ATOM O   OH        0.000  !      O
+ATOM H1  HO        0.5564 !    / | \
+ATOM H2	 HO   	   0.5564 !   /  M  \
+ATOM M   MO       -1.1128 ! H1       H2
+BOND O H1  O H2  O M       
+PATCHING FIRS NONE LAST NONE
+
+!CO2
+RESI CO2	0.00
+ATOM O1	OC     -0.35
+ATOM C1	CO	0.70
+ATOM O2 OC     -0.35
+BOND O1 C1 C1 O2
+ANGLE O1 C1 O2
+PATCHING FIRS NONE LAST NONE
+
+!N2
+RESI N2	0.00
+ATOM N1	N     -0.482
+ATOM Q1	COM    0.964
+ATOM N2 N     -0.482
+BOND N1 COM COM N2
+ANGLE N1 COM N2
+PATCHING FIRS NONE LAST NONE
+
+!CO
+RESI CO	0.00
+ATOM C1	CM    -0.75
+ATOM Q1	COM    1.60
+ATOM O1 OM    -0.85
+BOND C1 Q1 Q1 O1
+ANGLE C1 Q1 O1
+PATCHING FIRS NONE LAST NONE
+
+RESI NE        0.00 ! Neon
+GROUP
+ATOM NE NE     0.00 !
+PATCHING FIRS NONE LAST NONE
+
+RESI AR        0.00 ! Argon
+GROUP
+ATOM AR AR     0.00 !
+PATCHING FIRS NONE LAST NONE
+
+RESI KR        0.00 ! Krypton
+GROUP
+ATOM KR  KR     0.00 !
+PATCHING FIRS NONE LAST NONE
+
+RESI XE        0.00 ! Xenon
+GROUP
+ATOM XE  XE     0.00 !
+PATCHING FIRS NONE LAST NONE
+
+RESI RN        0.00 ! Radon
+GROUP
+ATOM RN  RN    0.00 !
+PATCHING FIRS NONE LAST NONE
+
+RESI DME        0.00 ! dimethylether
+GROUP
+ATOM C1 CH3     0.25  ! C1    C2
+ATOM O1 OE     -0.50  !   \  /
+ATOM C2 CH3     0.25  !    O1
+BOND C1 O1 C2 O1
+PATCHING FIRS NONE LAST NONE
+
+
 END
