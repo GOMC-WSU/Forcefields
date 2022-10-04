@@ -94,8 +94,8 @@ CH3 CT  CH2    31250     109.47  ! TraPPE II (ex. 2,2-dimethylbutane)
 CH3 CT  CH1    31250     109.47  ! TraPPE II (ex. 2,2,3-trimethylbutane)
 CH2 CT  CH2    31250     109.47  ! TraPPE II (ex. 3,3-dimethylpentane)
 CH3 CT  CT     31250     109.47  ! (ex. 2,2,3,3-tetramethylbutane)
-OH1  CH2  CH3  25200	 109.5    0.0      0.0 ! alcohol
-OH1  CH2  CH2  25200	 109.5    0.0      0.0 ! alcohol
+OH1  CH2  CH3  25200	 109.47    0.0      0.0 ! alcohol
+OH1  CH2  CH2  25200	 109.47    0.0      0.0 ! alcohol
 H    OH1  CH3  27700     108.5    0.0      0.0 ! alcohol
 H    OH1  CH2  27700     108.5    0.0      0.0 ! alcohol
 !Fluorocarbons
